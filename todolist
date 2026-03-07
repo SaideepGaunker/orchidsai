@@ -1,0 +1,462 @@
+
+* 📌 Phase 0 – Planning
+* 🏗 Phase 1 – Core Platform (MVP)
+* 🧠 Phase 2 – AI Integration
+* 📊 Phase 3 – Reporting & Analytics
+* 🏢 Phase 4 – B2B Features
+* 🚀 Phase 5 – Deployment & Optimization
+
+---
+
+# ✅ MASTER TODO LIST – AI INTERVIEW COACH
+
+---
+
+# 📌 PHASE 0 – PROJECT SETUP & PLANNING
+
+## Product & Architecture
+
+* [ ] Finalize MVP feature list
+* [ ] Define feature prioritization (Must / Should / Later)
+* [ ] Freeze database schema
+* [ ] Finalize API contract definitions
+* [ ] Define Confidence Index formula properly
+* [ ] Create system architecture diagram (final version)
+* [ ] Create ER diagram (finalized)
+* [ ] Create user flow diagrams
+
+## Infrastructure Planning
+
+* [ ] Create AWS account structure
+* [ ] Setup IAM roles & permissions
+* [ ] Define S3 bucket structure (raw / processed / reports)
+* [ ] Plan Step Functions workflow
+* [ ] Estimate AWS monthly cost
+
+---
+
+# 🏗 PHASE 1 – CORE PLATFORM (MVP BUILD)
+
+## 1️⃣ Frontend (React)
+
+### Authentication
+
+* [ ] Login page
+* [ ] Register page
+* [ ] OTP verification
+* [ ] Role-based routing
+* [ ] JWT handling
+
+### Dashboard
+
+* [ ] User dashboard UI
+* [ ] Interview history page
+* [ ] Exam history page
+* [ ] Profile edit page
+* [ ] Progress graph placeholders
+
+### Interview UI
+
+* [ ] Role selection screen
+* [ ] Interview configuration page
+* [ ] Camera & mic permission handling
+* [ ] Video recording component
+* [ ] Audio recording extraction
+* [ ] Timer component
+* [ ] Question display system
+* [ ] End session screen
+
+### Exam UI
+
+* [ ] MCQ test page
+* [ ] Timer integration
+* [ ] Auto-submit logic
+* [ ] Result screen
+
+---
+
+## 2️⃣ Backend (FastAPI)
+
+### Core APIs
+
+* [ ] User registration API
+* [ ] Login API
+* [ ] Token validation middleware
+* [ ] Session generation API
+* [ ] Question fetch API
+* [ ] Answer submission API
+* [ ] Feedback summary API
+* [ ] Difficulty adjustment API
+
+### Database
+
+* [ ] Setup mongodb
+* [ ] Create collections:
+
+  * [ ] Users
+  * [ ] Interview Sessions
+  * [ ] Questions
+  * [ ] Responses
+  * [ ] Voice Metrics
+  * [ ] Visual Metrics
+  * [ ] Reports
+* [ ] Add indexing
+* [ ] Add foreign key constraints
+
+---
+
+# 🧠 PHASE 2 – AI INTEGRATION
+
+---
+
+## 🎤 Voice Analysis (Amazon Transcribe)
+
+* [ ] Setup S3 audio upload
+* [ ] Trigger transcription job
+* [ ] Enable Call Analytics
+* [ ] Parse JSON transcript
+* [ ] Extract:
+
+  * [ ] WPM
+  * [ ] Filler words
+  * [ ] Silence duration
+  * [ ] Loudness
+  * [ ] Sentiment
+* [ ] Store in voice_metrics table
+
+---
+
+## 👁 Visual Analysis (Amazon Rekognition)
+
+* [ ] Implement frame extraction (1 frame/sec)
+* [ ] Send frames to DetectFaces API
+* [ ] Extract:
+
+  * [ ] Eye direction
+  * [ ] Emotions
+  * [ ] Head pose
+  * [ ] Smile %
+* [ ] Calculate:
+
+  * [ ] Eye contact %
+  * [ ] Composure score
+  * [ ] Stress indicator
+* [ ] Store visual metrics
+
+---
+
+## 🧠 Content Evaluation (Amazon Bedrock / Claude)
+
+* [ ] Design evaluation prompt template
+* [ ] Inject question + transcript
+* [ ] Enforce JSON output format
+* [ ] Extract:
+
+  * [ ] Technical score
+  * [ ] Structure score
+  * [ ] Completeness
+  * [ ] Strengths
+  * [ ] Weaknesses
+* [ ] Store text metrics
+
+---
+
+## 🔗 Multimodal Fusion
+
+* [ ] Normalize timestamps (ms conversion)
+* [ ] Create aggregation pipeline
+* [ ] Implement correlation logic:
+
+  * [ ] High pause + confusion = Knowledge gap
+  * [ ] Fast speech + distraction = Nervous rushing
+* [ ] Compute Confidence Index (CI)
+* [ ] Store CI score
+
+---
+
+# 📊 PHASE 3 – REPORTING SYSTEM
+
+---
+
+## Report Engine
+
+* [ ] Build report aggregation service
+* [ ] Generate structured report JSON
+* [ ] Create report scoring logic
+* [ ] Build PDF report generator
+* [ ] Store report in S3
+* [ ] Add report download endpoint
+
+## Dashboard Analytics
+
+* [ ] Line graph – Confidence growth
+* [ ] Pie chart – Skill gap distribution
+* [ ] Bar graph – Voice vs Visual vs Content score
+* [ ] Session comparison logic
+
+---
+
+# 🏢 PHASE 4 – B2B FEATURES
+
+---
+
+## Admin Panel
+
+* [ ] Admin login
+* [ ] Add students
+* [ ] Assign interview practice
+* [ ] View batch analytics
+* [ ] Export CSV reports
+
+## Institutional Analytics
+
+* [ ] Skill cluster heatmap
+* [ ] Weakest domain detection
+* [ ] Cohort progress tracking
+* [ ] Batch comparison view
+
+---
+
+# 💳 Monetization Module
+
+* [ ] Integrate payment gateway
+* [ ] Lock premium report
+* [ ] Subscription logic
+* [ ] Access control after payment
+
+---
+
+# 🔒 SECURITY & COMPLIANCE
+
+* [ ] HTTPS setup
+* [ ] Encrypt S3 objects
+* [ ] Secure JWT implementation
+* [ ] Implement RBAC
+* [ ] Consent popup for camera/mic
+* [ ] Data retention policy
+* [ ] Logging & monitoring
+
+---
+
+# 🚀 PHASE 5 – DEPLOYMENT & SCALING
+
+---
+
+## DevOps
+
+* [ ] Dockerize backend
+* [ ] Setup CI/CD pipeline
+* [ ] Setup AWS EC2 / ECS
+* [ ] Setup Load balancer
+* [ ] Configure Auto-scaling
+* [ ] Setup CloudWatch monitoring
+
+## Performance Optimization
+
+* [ ] Parallel processing via Step Functions
+* [ ] Optimize token usage in LLM
+* [ ] Batch processing optimization
+* [ ] Caching frequent queries
+
+---
+
+# 🧪 TESTING CHECKLIST
+
+---
+
+## Unit Testing
+
+* [ ] API validation tests
+* [ ] Scoring logic tests
+* [ ] CI formula tests
+
+## Integration Testing
+
+* [ ] End-to-end interview session test
+* [ ] Audio pipeline test
+* [ ] Visual pipeline test
+* [ ] Report generation test
+
+## Load Testing
+
+* [ ] Concurrent interview sessions
+* [ ] API response latency testing
+
+---
+
+# 🎯 FINAL PRE-LAUNCH CHECKLIST
+
+* [ ] Full interview simulation works
+* [ ] AI metrics generated correctly
+* [ ] Confidence Index calculated
+* [ ] Reports downloadable
+* [ ] Dashboard reflects correct analytics
+* [ ] No data leakage
+* [ ] Payment flow working
+
+---
+
+# 🧩 OPTIONAL (ADVANCED – PHASE 2+)
+
+* [ ] Group Discussion module
+* [ ] Resume parsing (Textract)
+* [ ] JD skill matching (RAG)
+* [ ] Multilingual support
+* [ ] Edge computing version
+* [ ] Human mentor integration
+
+---
+
+
+
+Status Report
+📌 PHASE 0 – PROJECT SETUP & PLANNING
+Item	Status
+Finalize MVP feature list	❌ Not done (no planning docs)
+Define feature prioritization	❌ Not done
+Freeze database schema	❌ Not done
+Finalize API contract definitions	❌ Not done
+Define Confidence Index formula	❌ Not done (CI formula hardcoded/static, not formally defined)
+Create system architecture diagram	❌ Not done
+Create ER diagram	❌ Not done
+Create user flow diagrams	❌ Not done
+Create AWS account structure	❌ Not done
+Setup IAM roles & permissions	❌ Not done
+Define S3 bucket structure	❌ Not done
+Plan Step Functions workflow	❌ Not done
+Estimate AWS monthly cost	❌ Not done
+
+    All of Phase 0 is planning/documentation/infrastructure work — none of it is in the codebase.
+
+🏗 PHASE 1 – CORE PLATFORM (MVP BUILD)
+Frontend Authentication
+Item	Status
+Login page	✅ Built (/login/page.tsx)
+Register page	✅ Built (/register/page.tsx) — 2-step with role selection
+OTP verification	❌ Not built — no OTP page or step exists
+Role-based routing	❌ Not built — routing is open, no guards or middleware
+JWT handling	❌ Not built — login just does window.location.href = "/dashboard" with no real auth
+Frontend Dashboard
+Item	Status
+User dashboard UI	✅ Built (/dashboard/page.tsx) — CI trend chart, radar, stats, sessions
+Interview history page	⚠️ Partial — recent sessions shown on dashboard, no dedicated history page
+Exam history page	❌ Not built — no history page for exams
+Profile edit page	✅ Built (/profile/page.tsx) — full edit form, badges, preferences
+Progress graph placeholders	✅ Built — CI area chart on dashboard, progress tab in reports
+Frontend Interview UI
+Item	Status
+Role selection screen	✅ Built (/interview/page.tsx) — type + domain + difficulty + duration
+Interview configuration page	✅ Built (same page — full config panel)
+Camera & mic permission handling	❌ Not built — no getUserMedia / permission request code
+Video recording component	❌ Not built — camera feed is a UI placeholder (avatar, not real video)
+Audio recording extraction	❌ Not built — textarea accepts typed answers only
+Timer component	✅ Built — live elapsed timer in session page
+Question display system	✅ Built — question card with type badges, tips
+End session screen	⚠️ Partial — "End Session" button links to /reports, no dedicated end screen
+Frontend Exam UI
+Item	Status
+MCQ test page	✅ Built (/exam/page.tsx) — 6 MCQs, options, navigation
+Timer integration	✅ Built — 10-min countdown, red alert when <2 min
+Auto-submit logic	✅ Built — auto-submits when timeLeft === 0
+Result screen	✅ Built — score %, correct/wrong/skipped breakdown, answer review
+2️⃣ Backend (FastAPI)
+Item	Status
+All Backend APIs	❌ None built — there is no backend at all. This is a Next.js-only frontend project. No FastAPI, no API routes, no server-side logic.
+All Database tables	❌ None built — no database connection, no schema, no ORM
+🧠 PHASE 2 – AI INTEGRATION
+Item	Status
+Voice Analysis (Amazon Transcribe)	❌ Not built — all voice metrics are static mock data
+Visual Analysis (Amazon Rekognition)	❌ Not built — camera feed is a placeholder avatar
+Content Evaluation (Amazon Bedrock / Claude)	❌ Not built — questions are hardcoded arrays
+Multimodal Fusion & Confidence Index	❌ Not built — CI scores are hardcoded numbers
+📊 PHASE 3 – REPORTING SYSTEM
+Item	Status
+Report aggregation service	❌ Not built (no backend)
+Structured report JSON	❌ Not built
+Report scoring logic	❌ Not built
+PDF report generator	❌ Not built — "Download PDF" button exists in UI but does nothing
+Store report in S3	❌ Not built
+Report download endpoint	❌ Not built
+Dashboard Analytics (line graph)	✅ Built — CI trend area chart on dashboard
+Dashboard Analytics (pie/skill gap)	⚠️ Partial — radar chart covers skill breakdown, no pie chart
+Dashboard Analytics (bar graph)	✅ Built — voice/visual/content bar chart in reports
+Session comparison logic	⚠️ Partial — session selector in reports page, but comparison is visual only
+🏢 PHASE 4 – B2B FEATURES
+Item	Status
+Admin panel (all items)	❌ Not built — no /admin route exists
+Institutional analytics	❌ Not built
+Monetization / Payment gateway	❌ Not built — "Upgrade" button exists in profile but does nothing
+Subscription logic	❌ Not built
+Access control after payment	❌ Not built
+🔒 SECURITY & COMPLIANCE
+Item	Status
+HTTPS setup	❌ Not configured
+Encrypt S3 objects	❌ Not applicable yet (no S3)
+Secure JWT implementation	❌ Not built
+RBAC	❌ Not built
+Consent popup for camera/mic	❌ Not built
+Data retention policy	❌ Not built
+Logging & monitoring	❌ Not built
+🚀 PHASE 5 – DEPLOYMENT & SCALING
+Item	Status
+All DevOps / CI-CD / AWS items	❌ None built
+All performance optimization items	❌ None built
+🧪 TESTING
+Item	Status
+All unit / integration / load tests	❌ None — no test files exist anywhere in the project
+🎯 FINAL PRE-LAUNCH CHECKLIST
+Item	Status
+Full interview simulation works	⚠️ UI only — no real recording, transcription, or AI scoring
+AI metrics generated correctly	❌ All static mock data
+Confidence Index calculated	❌ Hardcoded number (74)
+Reports downloadable	❌ Button exists, no functionality
+Dashboard reflects correct analytics	⚠️ Static demo data only
+No data leakage	N/A — no real data yet
+Payment flow working	❌ Not built
+Summary
+
+What IS built (frontend UI only):
+
+    Login, Register pages
+    Dashboard with charts and stats (static data)
+    Interview setup + session pages (UI only, no real recording)
+    Exam page with timer, MCQ, auto-submit, results
+    Profile page with edit form
+    Reports page with multi-tab analytics (static data)
+    Sidebar navigation
+
+What is NOT built (everything else):
+
+    No real authentication (JWT, OTP, route guards)
+    No backend (FastAPI or any API routes)
+    No database
+    No real video/audio recording
+    No AI integrations (Transcribe, Rekognition, Bedrock)
+    No PDF generation
+    No payments
+    No admin panel
+    No testing
+    No deployment config
+    No AWS infrastructure
+
+The project is roughly ~15–20% complete — a solid UI shell exists for Phase 1 frontend, but all backend, AI, and infrastructure work remains at 0%.
+
+
+you were completing a todo list and stopped suddenly. there were 11 todos, only 9 were completed and 2 were left, i have listed them below:
+Build OTP verification page/step
+Implement JWT handling + auth context (mock)
+Role-based routing middleware/guards
+Build dedicated interview history page
+Build dedicated exam history page
+Camera & mic permission handling + real video feed
+Video recording component + audio extraction
+Dedicated end session screen with summary
+continue with these todos
+
+
+
+there are some issues in the current version of the website.
+1. some areas are clunky and delayed response on button press.
+2. in the image uploaded, the questions remaining goes below 0 instead of submitting the interview.
+pasted image in clipboard
+

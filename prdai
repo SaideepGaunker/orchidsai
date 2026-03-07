@@ -1,0 +1,406 @@
+
+# 1. Product Overview
+
+AI Interview Coach is a cloud-native, AI-powered interview and exam preparation platform designed to bridge the employability gap among graduates. The system provides multimodal evaluation (text, voice, and video) to simulate real-world interviews and competitive exams.
+
+The platform supports both:
+
+* **B2C (Individual Users)** – Students, graduates, working professionals
+* **B2B (Institutions & Corporates)** – Colleges, training centers, HR departments
+
+The product aims to provide personalized feedback, adaptive difficulty, and structured performance analytics.
+
+---
+
+# 2. Problem Statement
+
+Despite rapid educational growth in India, nearly **45–50% of graduates lack job readiness**. Existing platforms:
+
+* Only evaluate written answers
+* Do not analyze body language or speech behavior
+* Lack adaptive learning
+* Do not integrate interview + exam prep together
+* Do not provide personalized improvement pathways
+
+There is no unified system combining:
+
+* Mock Interviews
+* Competitive Exam Practice
+* Voice & Visual Behavioral Analysis
+* Skill Gap Mapping
+* Real-time Feedback
+* Institutional Monitoring
+
+AI Interview Coach addresses this gap.
+
+---
+
+# 3. Goals & Objectives
+
+### Primary Goals
+
+1. Provide realistic AI-driven mock interviews.
+2. Evaluate multimodal behavior (speech, emotion, posture).
+3. Offer structured performance reports.
+4. Provide adaptive difficulty.
+5. Support both B2C and B2B use cases.
+
+### Success Metrics (KPIs)
+
+| Metric                         | Target                        |
+| ------------------------------ | ----------------------------- |
+| Mock interview completion rate | > 75%                         |
+| User retention (30 days)       | > 50%                         |
+| Avg. report generation time    | < 30 sec                      |
+| Institutional adoption rate    | 10+ colleges in Year 1        |
+| Confidence score improvement   | 20% increase after 4 sessions |
+
+---
+
+# 4. Target Users
+
+## 4.1 B2C Users
+
+* Undergraduate students
+* Fresh graduates
+* Competitive exam aspirants
+* Working professionals
+* Career switchers
+
+## 4.2 B2B Users
+
+* Colleges & placement cells
+* Coaching institutes
+* Corporate HR teams
+* Training organizations
+
+---
+
+# 5. User Personas
+
+### Persona 1: Engineering Student (Final Year)
+
+Needs:
+
+* Technical mock interviews
+* Confidence improvement
+* Resume-job match evaluation
+
+### Persona 2: UPSC Aspirant
+
+Needs:
+
+* Timed exam practice
+* Answer evaluation
+* Performance tracking
+
+### Persona 3: Placement Officer (B2B)
+
+Needs:
+
+* Student performance dashboard
+* Batch analytics
+* Skill gap reports
+
+---
+
+# 6. Product Features
+
+---
+
+## 6.1 Core Features (MVP)
+
+### 1️⃣ User Management
+
+* Registration & Login (JWT / OAuth)
+* OTP verification
+* Role-based access control (RBAC)
+* Profile management
+
+---
+
+### 2️⃣ Interview Simulation Module
+
+* Role selection (HR / Technical / Case)
+* Domain selection
+* AI-driven question generation
+* Audio & video capture
+* Time-based response recording
+* Adaptive difficulty engine
+
+---
+
+### 3️⃣ Multimodal AI Evaluation
+
+#### Voice Analysis
+
+* Words Per Minute (WPM)
+* Filler word count
+* Silence duration
+* Loudness variance
+* Sentiment trajectory
+
+#### Visual Analysis
+
+* Eye contact %
+* Emotion detection
+* Posture detection
+* Stress indicator
+* Engagement level
+
+#### Content Analysis
+
+* Technical accuracy score
+* STAR structure adherence
+* Completeness score
+* Skill gap detection (RAG-based JD matching)
+
+---
+
+### 4️⃣ Exam Practice Module
+
+* MCQs
+* Subjective answers
+* Timed sessions
+* Auto evaluation
+* Difficulty adjustment
+
+---
+
+### 5️⃣ Reporting System
+
+* Session summary
+* Confidence Index (CI)
+* Skill gap analysis
+* Visual behavioral analytics
+* Downloadable PDF reports
+* Weekly/monthly progress tracking
+
+---
+
+### 6️⃣ Recommendation Engine
+
+* Suggest study resources
+* Suggest targeted practice
+* Suggest improvement modules
+* Skill-based course suggestions
+
+---
+
+### 7️⃣ B2B Dashboard
+
+* Student batch overview
+* Institution performance metrics
+* Weakest skill clusters
+* Exportable analytics
+
+---
+
+# 7. Advanced Features (Phase 2)
+
+* Group Discussion (GD) Module
+* Real-time collaborative interviews
+* Resume parsing + job fit prediction
+* Multilingual support
+* Long-term psychometric tracking
+* Hybrid Human + AI coaching
+
+---
+
+# 8. Functional Requirements
+
+| ID    | Requirement                                             |
+| ----- | ------------------------------------------------------- |
+| FR-1  | System shall allow user registration and authentication |
+| FR-2  | System shall support role-based interview simulations   |
+| FR-3  | System shall record audio and video                     |
+| FR-4  | System shall perform speech-to-text conversion          |
+| FR-5  | System shall analyze facial expressions                 |
+| FR-6  | System shall generate structured performance report     |
+| FR-7  | System shall support adaptive difficulty                |
+| FR-8  | System shall allow B2B admin analytics                  |
+| FR-9  | System shall store multimodal metrics                   |
+| FR-10 | System shall generate Confidence Index                  |
+
+---
+
+# 9. Non-Functional Requirements
+
+### Security
+
+* End-to-end encryption
+* JWT authentication
+* RBAC
+* Secure S3 storage
+* Data anonymization
+
+### Performance
+
+* AI analysis latency < 10 sec
+* Report generation < 30 sec
+* Support concurrent users (scalable)
+
+### Scalability
+
+* Cloud-native (AWS)
+* Auto-scaling groups
+* Serverless Step Functions
+
+### Compatibility
+
+* Chrome, Firefox, Edge
+* Windows, Mac, Linux
+* Mobile responsive
+
+---
+
+# 10. Technical Architecture
+
+## Architecture Type:
+
+Cloud-native, multi-tier, event-driven architecture.
+
+### Layers:
+
+1. Presentation Layer (React)
+2. Backend Layer (FastAPI)
+3. AI Processing Layer (AWS Services)
+4. Data Layer (MySQL + DynamoDB + S3)
+5. Security Layer (IAM + JWT)
+
+---
+
+# 11. Technology Stack
+
+| Component      | Technology         |
+| -------------- | ------------------ |
+| Frontend       | React              |
+| Backend        | FastAPI            |
+| Database       | MySQL              |
+| Storage        | AWS S3             |
+| Speech         | Amazon Transcribe  |
+| Vision         | Amazon Rekognition |
+| LLM            | Amazon Bedrock     |
+| Orchestration  | AWS Step Functions |
+| Authentication | JWT / OAuth 2.0    |
+| Deployment     | AWS Cloud          |
+
+---
+
+# 12. Data Model (High Level Entities)
+
+* Users
+* Mentors
+* Interview Sessions
+* Exam Sessions
+* Questions
+* Responses
+* Voice Metrics
+* Visual Metrics
+* Text Metrics
+* Reports
+
+---
+
+# 13. Confidence Index (CI) Formula
+
+Composite weighted score:
+
+CI =
+(0.35 × Content Score) +
+(0.25 × Voice Score) +
+(0.25 × Visual Score) +
+(0.15 × Consistency Score)
+
+Range: 0 – 100
+
+---
+
+# 14. User Flow
+
+### B2C Flow
+
+Register → Choose Role → Start Interview → AI Evaluation → Report → Improvement Plan
+
+### B2B Flow
+
+Admin Login → Add Students → Assign Practice → Monitor Dashboard → Export Reports
+
+---
+
+# 15. Monetization Model
+
+### Freemium Model
+
+* Free: Basic interview + summary report
+* Paid: Full multimodal analysis + PDF reports + recommendations
+
+### B2B Licensing
+
+* Per student subscription
+* Institutional analytics package
+
+---
+
+# 16. Risks & Mitigation
+
+| Risk                 | Mitigation                            |
+| -------------------- | ------------------------------------- |
+| AI misclassification | Human review layer                    |
+| High AWS cost        | Batch processing + token optimization |
+| Latency issues       | Parallel processing (Step Functions)  |
+| Privacy concerns     | Explicit consent + encryption         |
+| Bias in AI           | Regular bias audits                   |
+
+---
+
+# 17. Ethical Considerations
+
+* Transparent scoring
+* Explainable AI output
+* No discriminatory scoring
+* User consent before camera/mic access
+* Data retention policy
+
+---
+
+# 18. Roadmap
+
+### Phase 1 (MVP – 6 Months)
+
+* Core interview engine
+* Voice & visual metrics
+* Report generation
+* B2C platform
+
+### Phase 2 (6–12 Months)
+
+* B2B dashboard
+* GD module
+* Resume matching
+* Multilingual support
+
+### Phase 3 (12–18 Months)
+
+* Employability Index
+* Predictive placement model
+* Hybrid mentorship
+
+---
+
+# 19. Acceptance Criteria
+
+* User can complete interview without crash.
+* AI metrics are generated and stored.
+* Report reflects voice + visual + content scores.
+* Adaptive difficulty changes question level dynamically.
+* B2B dashboard displays student analytics.
+
+---
+
+# 20. Conclusion
+
+AI Interview Coach is a scalable, AI-powered career preparation platform integrating multimodal intelligence to provide realistic interview simulations and adaptive exam preparation. It democratizes access to high-quality career coaching using advanced cloud-based AI infrastructure.
+
+---
+

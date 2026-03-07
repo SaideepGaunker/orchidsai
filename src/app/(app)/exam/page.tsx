@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Clock,
   ChevronRight,
@@ -65,6 +65,7 @@ const examQuestions = [
 ];
 
 export default function ExamPage() {
+  const router = useRouter();
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
@@ -89,85 +90,13 @@ export default function ExamPage() {
   };
 
   const handleSubmit = () => {
-    setSubmitted(true);
-    setShowResult(true);
+    const score = examQuestions.filter((q, i) => selectedAnswers[i] === q.correct).length;
+    router.push(`/exam/results?score=${score}&total=${examQuestions.length}`);
   };
 
   const score = examQuestions.filter((q, i) => selectedAnswers[i] === q.correct).length;
   const percent = Math.round((score / examQuestions.length) * 100);
 
-  if (showResult) {
-    return (
-      <div className="p-6 lg:p-8 min-h-screen flex items-center justify-center">
-        <div className="max-w-2xl w-full">
-          <div className="glass-card rounded-3xl p-8 text-center mb-6"
-            style={{ border: "1px solid rgba(251,146,60,0.2)" }}>
-            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
-              style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 30px rgba(251,146,60,0.3)" }}>
-              <Trophy size={28} className="text-black" />
-            </div>
-            <h2 className="text-2xl font-bold text-white mb-1">Exam Completed!</h2>
-            <p className="text-white/40 text-sm mb-6">Here&apos;s how you performed</p>
-
-            <div className="text-6xl font-black text-gradient-amber mb-2">{percent}%</div>
-            <p className="text-white/50 text-sm mb-6">{score} / {examQuestions.length} correct</p>
-
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {[
-                { label: "Correct", value: score, color: "teal" },
-                { label: "Wrong", value: examQuestions.length - score - (examQuestions.length - Object.keys(selectedAnswers).length), color: "red" },
-                { label: "Skipped", value: examQuestions.length - Object.keys(selectedAnswers).length, color: "amber" },
-              ].map(({ label, value, color }) => (
-                <div key={label} className="rounded-xl p-3"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                  <p className={`text-xl font-bold ${color === "teal" ? "text-teal-400" : color === "red" ? "text-red-400" : "text-amber-400"}`}>{value}</p>
-                  <p className="text-xs text-white/35 mt-0.5">{label}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => { setSubmitted(false); setShowResult(false); setSelectedAnswers({}); setCurrentQ(0); setTimeLeft(600); }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-white/60 glass-card glass-card-hover transition-all">
-                <RotateCcw size={14} /> Retake Exam
-              </button>
-              <Link href="/reports"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-black transition-all hover:scale-105"
-                style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)" }}>
-                <BarChart2 size={14} /> View Full Report
-              </Link>
-            </div>
-          </div>
-
-          {/* Answer Review */}
-          <div className="glass-card rounded-2xl p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">Answer Review</h3>
-            <div className="space-y-3">
-              {examQuestions.map((q, i) => {
-                const userAns = selectedAnswers[i];
-                const correct = userAns === q.correct;
-                return (
-                  <div key={i} className="rounded-xl p-4"
-                    style={{ background: correct ? "rgba(20,184,166,0.06)" : "rgba(239,68,68,0.06)", border: `1px solid ${correct ? "rgba(20,184,166,0.15)" : "rgba(239,68,68,0.15)"}` }}>
-                    <div className="flex items-start gap-2">
-                      {correct ? <CheckCircle2 size={15} className="text-teal-400 flex-shrink-0 mt-0.5" /> : <XCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />}
-                      <div>
-                        <p className="text-xs font-medium text-white/80">{q.question}</p>
-                        {!correct && userAns !== undefined && (
-                          <p className="text-xs text-red-400 mt-1">Your answer: {q.options[userAns]}</p>
-                        )}
-                        <p className="text-xs text-teal-400 mt-0.5">Correct: {q.options[q.correct]}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   const q = examQuestions[currentQ];
   const answered = selectedAnswers[currentQ] !== undefined;

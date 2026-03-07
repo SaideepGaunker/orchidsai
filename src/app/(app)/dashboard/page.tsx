@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import {
   Mic2,
   BookOpen,
@@ -15,6 +16,7 @@ import {
   BarChart2,
   Video,
 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   AreaChart,
   Area,
@@ -73,6 +75,37 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
 };
 
 export default function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="p-6 lg:p-8 space-y-6">
+        <div className="flex justify-between items-start">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48 bg-white/5" />
+            <Skeleton className="h-4 w-64 bg-white/5" />
+          </div>
+          <Skeleton className="h-10 w-32 rounded-xl bg-white/5" />
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-32 rounded-2xl bg-white/5" />
+          ))}
+        </div>
+        <div className="grid lg:grid-cols-3 gap-5">
+          <Skeleton className="lg:col-span-2 h-[300px] rounded-2xl bg-white/5" />
+          <Skeleton className="h-[300px] rounded-2xl bg-white/5" />
+        </div>
+        <Skeleton className="h-48 rounded-2xl bg-white/5" />
+      </div>
+    );
+  }
+
   const ciScore = 74;
   const ciPercent = ciScore;
 
@@ -243,21 +276,35 @@ export default function DashboardPage() {
             </h3>
             <p className="text-xs text-white/30">Based on your last 4 sessions</p>
           </div>
+          <Link href="/recommendations" className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 transition-colors">
+            View all <ArrowRight size={11} />
+          </Link>
         </div>
         <div className="grid md:grid-cols-3 gap-3">
           {[
-            { title: "Reduce Filler Words", desc: "You used 'um' and 'uh' 14 times in your last session. Practice structured pauses.", tag: "Voice" },
-            { title: "Improve Eye Contact", desc: "Eye contact was at 58%. Look directly at the camera when answering questions.", tag: "Visual" },
-            { title: "Use STAR Structure", desc: "Your content score improves 18% when you follow the Situation-Task-Action-Result format.", tag: "Content" },
+            { title: "Reduce Filler Words", desc: "You used 'um' and 'uh' 14 times in your last session. Practice structured pauses.", tag: "Voice", href: "/interview" },
+            { title: "Improve Eye Contact", desc: "Eye contact was at 58%. Look directly at the camera when answering questions.", tag: "Visual", href: "/interview/session" },
+            { title: "Use STAR Structure", desc: "Your content score improves 18% when you follow the Situation-Task-Action-Result format.", tag: "Content", href: "/interview" },
           ].map((r) => (
-            <div key={r.title} className="rounded-xl p-4"
+            <div key={r.title} className="rounded-xl p-4 flex flex-col gap-2"
               style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-              <div className="inline-flex px-2 py-0.5 rounded-md text-xs font-semibold mb-2 text-amber-400"
+              <div className="inline-flex px-2 py-0.5 rounded-md text-xs font-semibold w-fit text-amber-400"
                 style={{ background: "rgba(251,146,60,0.1)" }}>
                 {r.tag}
               </div>
-              <p className="text-sm font-medium text-white mb-1">{r.title}</p>
-              <p className="text-xs text-white/35 leading-relaxed">{r.desc}</p>
+              <p className="text-sm font-medium text-white">{r.title}</p>
+              <p className="text-xs text-white/35 leading-relaxed flex-1">{r.desc}</p>
+              <div className="flex items-center gap-2 pt-1">
+                <Link href={r.href}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
+                  style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", color: "#000" }}>
+                  Practice Now
+                </Link>
+                <Link href="/recommendations"
+                  className="flex items-center gap-1 text-xs text-white/35 hover:text-white/60 transition-colors">
+                  Details <ChevronRight size={11} />
+                </Link>
+              </div>
             </div>
           ))}
         </div>

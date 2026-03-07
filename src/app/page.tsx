@@ -73,6 +73,7 @@ const plans = [
     period: "forever",
     features: ["3 mock interviews/month", "Basic session summary", "MCQ practice access", "Dashboard overview"],
     cta: "Get Started Free",
+    link: "/register",
     highlight: false,
   },
   {
@@ -88,6 +89,7 @@ const plans = [
       "Priority support",
     ],
     cta: "Start Pro Trial",
+    link: "/register",
     highlight: true,
   },
   {
@@ -103,6 +105,7 @@ const plans = [
       "Dedicated account manager",
     ],
     cta: "Contact Sales",
+    link: "/admin-register",
     highlight: false,
   },
 ];
@@ -170,10 +173,17 @@ export default function LandingPage() {
               Start Free Today
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/dashboard"
+            <Link href="/login"
               className="flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white/80 hover:text-white transition-all glass-card glass-card-hover">
               <Play size={14} className="text-amber-400" />
-              Watch Demo
+              Student Login
+            </Link>
+            <div className="w-px h-10 bg-white/10 hidden sm:block mx-2" />
+            <Link href="/admin-login"
+              className="group flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
+              style={{ background: "linear-gradient(135deg,#10b981,#059669)", boxShadow: "0 0 30px rgba(16,185,129,0.3)" }}>
+              <ShieldCheck size={16} />
+              B2B Admin Portal
             </Link>
           </div>
 
@@ -275,7 +285,7 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/register"
+                <Link href={plan.link || "/register"}
                   className="w-full text-center py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105"
                   style={plan.highlight ? {
                     background: "linear-gradient(135deg,#fb923c,#f59e0b)",

@@ -11,7 +11,7 @@ type ReporterProps = {
 export default function ErrorReporter({ error, reset }: ReporterProps) {
   /* ─ instrumentation shared by every route ─ */
   const lastOverlayMsg = useRef("");
-  const pollRef = useRef<NodeJS.Timeout>();
+  const pollRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     const inIframe = window.parent !== window;
@@ -96,36 +96,50 @@ export default function ErrorReporter({ error, reset }: ReporterProps) {
 
   /* ─ global-error UI ─ */
   return (
-    <html>
-      <body className="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center space-y-6">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-destructive">
-              Something went wrong!
-            </h1>
-            <p className="text-muted-foreground">
-              An unexpected error occurred. Please try again fixing with Orchids
+    <html lang="en">
+      <body className="min-h-screen flex items-center justify-center p-4 bg-[#050510] bg-grid">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none opacity-20"
+          style={{ background: "radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)" }} />
+
+        <div className="max-w-md w-full relative">
+          <div className="glass-card rounded-[32px] p-10 border border-red-500/10 text-center shadow-2xl">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+              style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)" }}>
+              <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white">!</div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-white mb-2">Something went wrong!</h1>
+            <p className="text-sm text-white/40 mb-8 leading-relaxed">
+              We encountered an unexpected error. Our engineers have been notified.
             </p>
-          </div>
-          <div className="space-y-2">
-            {process.env.NODE_ENV === "development" && (
-              <details className="mt-4 text-left">
-                <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
-                  Error details
+
+            <div className="space-y-3">
+              <button
+                onClick={() => reset?.()}
+                className="w-full py-4 rounded-2xl text-sm font-black uppercase tracking-widest text-black transition-all hover:scale-[1.02]"
+                style={{ background: "linear-gradient(135deg, #ef4444, #b91c1c)", boxShadow: "0 8px 24px rgba(239,68,68,0.2)" }}
+              >
+                Try Again
+              </button>
+              <button
+                onClick={() => window.location.href = "/"}
+                className="w-full py-4 rounded-2xl text-sm font-black uppercase tracking-widest text-white/30 hover:text-white transition-all glass-card glass-card-hover border border-white/5"
+              >
+                Go to Homepage
+              </button>
+            </div>
+
+            {process.env.NODE_ENV === "development" && error && (
+              <details className="mt-8 text-left group">
+                <summary className="cursor-pointer text-[10px] font-bold text-white/20 uppercase tracking-[2px] hover:text-white/40 transition-colors list-none text-center">
+                  Technical Details
                 </summary>
-                <pre className="mt-2 text-xs bg-muted p-2 rounded overflow-auto">
-                  {error.message}
-                  {error.stack && (
-                    <div className="mt-2 text-muted-foreground">
-                      {error.stack}
-                    </div>
-                  )}
-                  {error.digest && (
-                    <div className="mt-2 text-muted-foreground">
-                      Digest: {error.digest}
-                    </div>
-                  )}
-                </pre>
+                <div className="mt-4 p-4 rounded-xl bg-black/40 border border-white/5 overflow-auto max-h-48 scrollbar-hide">
+                  <pre className="text-[10px] text-red-300/60 font-mono leading-relaxed">
+                    {error.name}: {error.message}
+                    {error.stack && `\n\n${error.stack}`}
+                  </pre>
+                </div>
               </details>
             )}
           </div>

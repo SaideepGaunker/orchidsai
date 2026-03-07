@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ComponentType } from "react";
 import {
   User,
   Mail,
@@ -28,6 +28,8 @@ const badges = [
   { label: "Quick Learner", icon: "⚡", earned: true },
 ];
 
+type Preference = { icon: ComponentType<{ size?: number; className?: string }>; label: string; desc: string; on: boolean };
+
 export default function ProfilePage() {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState("Arjun Kumar");
@@ -36,6 +38,25 @@ export default function ProfilePage() {
   const [college, setCollege] = useState("IIT Delhi");
   const [city, setCity] = useState("New Delhi, India");
   const [bio, setBio] = useState("Final year CSE student targeting product roles at top-tier tech companies. Preparing for technical and PM interviews.");
+  const [targetRole, setTargetRole] = useState("Software Engineer");
+  const [interviewDomain, setInterviewDomain] = useState("technical");
+  const [experienceLevel, setExperienceLevel] = useState("student");
+  const [preferences, setPreferences] = useState<Preference[]>([
+    { icon: Bell, label: "Email Notifications", desc: "Session reminders and weekly reports", on: true },
+    { icon: Shield, label: "Two-Factor Authentication", desc: "Extra security for your account", on: false },
+    { icon: Mic2, label: "Auto-transcription", desc: "Automatically transcribe your spoken answers", on: true },
+  ]);
+
+  const togglePreference = (index: number) => {
+    setPreferences((prev) =>
+      prev.map((p, i) => (i === index ? { ...p, on: !p.on } : p))
+    );
+  };
+
+  const handleSave = () => {
+    setEditing(false);
+    // TODO: Persist profile updates to API/database
+  };
 
   return (
     <div className="p-6 lg:p-8 min-h-screen">
@@ -116,7 +137,7 @@ export default function ProfilePage() {
           <div className="glass-card rounded-2xl p-6">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-sm font-semibold text-white">Personal Information</h3>
-              <button onClick={() => setEditing(!editing)}
+              <button onClick={() => (editing ? handleSave() : setEditing(true))}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all glass-card glass-card-hover"
                 style={editing ? { color: "#fb923c", border: "1px solid rgba(251,146,60,0.25)" } : { color: "rgba(255,255,255,0.5)" }}>
                 {editing ? <Save size={12} /> : <Edit3 size={12} />}
@@ -164,17 +185,71 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {/* Career Goals */}
+          <div className="glass-card rounded-2xl p-6">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h3 className="text-sm font-semibold text-white">Career Goals</h3>
+                <p className="text-xs text-white/30 mt-0.5">Used by AI to tailor questions and difficulty</p>
+              </div>
+              {editing && (
+                <span className="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-md font-semibold">Editing</span>
+              )}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="sm:col-span-2">
+                <label className="text-xs font-medium text-white/40 mb-1.5 flex items-center gap-1.5">
+                  <Target size={11} /> Target Role
+                </label>
+                <input
+                  type="text" value={targetRole} onChange={(e) => setTargetRole(e.target.value)} disabled={!editing}
+                  className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none transition-all"
+                  style={editing ? { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(251,146,60,0.3)" } : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }}
+                />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-white/40 mb-1.5 block">Interview Domain</label>
+                <select
+                  value={interviewDomain} onChange={(e) => setInterviewDomain(e.target.value)} disabled={!editing}
+                  className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none transition-all appearance-none"
+                  style={editing ? { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(251,146,60,0.3)" } : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }}
+                >
+                  <option value="hr" style={{ background: "#0a0c1e" }}>HR / Behavioral</option>
+                  <option value="technical" style={{ background: "#0a0c1e" }}>Technical</option>
+                  <option value="case" style={{ background: "#0a0c1e" }}>Case Interview</option>
+                  <option value="mixed" style={{ background: "#0a0c1e" }}>Mixed (Full Mock)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-medium text-white/40 mb-1.5 block">Experience Level</label>
+                <select
+                  value={experienceLevel} onChange={(e) => setExperienceLevel(e.target.value)} disabled={!editing}
+                  className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none transition-all appearance-none"
+                  style={editing ? { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(251,146,60,0.3)" } : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)" }}
+                >
+                  <option value="student" style={{ background: "#0a0c1e" }}>Student / Fresher</option>
+                  <option value="0-2" style={{ background: "#0a0c1e" }}>0–2 Years</option>
+                  <option value="2-5" style={{ background: "#0a0c1e" }}>2–5 Years</option>
+                  <option value="5+" style={{ background: "#0a0c1e" }}>5+ Years</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           {/* Preferences */}
           <div className="glass-card rounded-2xl p-6">
             <h3 className="text-sm font-semibold text-white mb-5">Preferences & Settings</h3>
             <div className="space-y-2">
-              {[
-                { icon: Bell, label: "Email Notifications", desc: "Session reminders and weekly reports", on: true },
-                { icon: Shield, label: "Two-Factor Authentication", desc: "Extra security for your account", on: false },
-                { icon: Mic2, label: "Auto-transcription", desc: "Automatically transcribe your spoken answers", on: true },
-              ].map(({ icon: Icon, label, desc, on }) => (
-                <div key={label} className="flex items-center justify-between p-3.5 rounded-xl"
-                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>
+              {preferences.map(({ icon: Icon, label, desc, on }, index) => (
+                <div
+                  key={label}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => togglePreference(index)}
+                  onKeyDown={(e) => e.key === "Enter" && togglePreference(index)}
+                  className="flex items-center justify-between p-3.5 rounded-xl cursor-pointer"
+                  style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}
+                >
                   <div className="flex items-center gap-3">
                     <Icon size={15} className="text-white/30" />
                     <div>
@@ -182,10 +257,12 @@ export default function ProfilePage() {
                       <p className="text-xs text-white/30">{desc}</p>
                     </div>
                   </div>
-                  <div className="w-10 h-5 rounded-full relative cursor-pointer transition-all"
+                  <div className="w-10 h-5 rounded-full relative transition-all"
                     style={{ background: on ? "linear-gradient(135deg,#fb923c,#f59e0b)" : "rgba(255,255,255,0.1)" }}>
-                    <div className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all"
-                      style={{ left: on ? "calc(100% - 18px)" : "2px", boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }} />
+                    <div
+                      className="absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all"
+                      style={{ left: on ? "calc(100% - 18px)" : "2px", boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
+                    />
                   </div>
                 </div>
               ))}
