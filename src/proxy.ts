@@ -14,7 +14,7 @@ function isB2BPath(pathname: string) {
 
 // Role-based guard: reads token from cookie/header and checks role
 // Mock: we can't read localStorage in middleware; real impl would use httpOnly cookie
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (isPublic(pathname)) {
