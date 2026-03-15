@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-export type UserRole = "student" | "professional" | "institution" | "admin";
+export type UserRole = "student" | "professional" | "institution" | "admin" | "platform_admin" | "question_validator" | "super_admin" | "b2b_student";
 
 export interface User {
   id: string;
@@ -82,11 +82,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(async (email: string, password: string): Promise<boolean> => {
     setState((s) => ({ ...s, isLoading: true }));
     await new Promise((r) => setTimeout(r, 500));
-    const user: User = { ...mockUser, email };
+    
+    // Determine role based on email
+    let role: UserRole = "student";
+    let name = "User";
+    
+    // Platform admin roles
+    if (email === "admin@orchids.ai") {
+      role = "platform_admin";
+      name = "Platform Admin";
+    } else if (email === "validator@orchids.ai") {
+      role = "question_validator";
+      name = "Question Validator";
+    } else if (email === "superadmin@orchids.ai") {
+      role = "super_admin";
+      name = "Super Admin";
+    } 
+    // Mentor/Institution roles
+    else if (email.includes("mentor") || email.includes("institution")) {
+      role = "admin";
+      name = "Mentor";
+    }
+    // B2B Student (enrolled via institution/mentor)
+    else if (email.includes("b2bstudent") || email.includes("b2b.student")) {
+      role = "b2b_student";
+      name = "B2B Student";
+    } 
+    // Other roles
+    else if (email.includes("professional")) {
+      role = "professional";
+      name = "Professional User";
+    }
+    
+    const user: User = { 
+      id: "u-" + Math.random().toString(36).substr(2, 9),
+      email, 
+      name,
+      role 
+    };
+    
     localStorage.setItem(AUTH_STORAGE_KEY, mockToken);
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
     setAuthCookie(mockToken);
     setState({ user, token: mockToken, isAuthenticated: true, isLoading: false });
+    
     return true;
   }, []);
 

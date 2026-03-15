@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 
 const adminNavItems = [
-    { icon: LayoutDashboard, label: "Admin Overview", href: "/admin" },
+    { icon: LayoutDashboard, label: "Mentor Overview", href: "/admin" },
     { icon: Users, label: "Student Batches", href: "/admin/students" },
     { icon: BarChart3, label: "Institution Analytics", href: "/admin/analytics" },
     { icon: UserPlus, label: "Invite Students", href: "/admin/invite" },
@@ -31,7 +31,7 @@ export default function AdminSidebar() {
     const handleSignOut = (e: React.MouseEvent) => {
         e.preventDefault();
         logout();
-        router.push("/login");
+        router.push("/admin-login");
     };
 
     return (
@@ -56,12 +56,12 @@ export default function AdminSidebar() {
                     <BrainCircuit size={20} className="text-black" />
                 </div>
                 <div>
-                    <p className="text-sm font-bold text-white leading-none">Admin Portal</p>
+                    <p className="text-sm font-bold text-white leading-none">Mentor Portal</p>
                     <p className="text-xs font-semibold text-emerald-400">Institution</p>
                 </div>
             </div>
 
-            {/* Admin Info */}
+            {/* Mentor Info */}
             <div className="mx-4 mb-6 p-3 rounded-xl glass-card flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-xs font-bold text-black flex-shrink-0">
                     AD

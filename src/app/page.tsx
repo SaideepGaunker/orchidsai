@@ -73,7 +73,7 @@ const plans = [
     period: "forever",
     features: ["3 mock interviews/month", "Basic session summary", "MCQ practice access", "Dashboard overview"],
     cta: "Get Started Free",
-    link: "/register",
+    link: "/student-register",
     highlight: false,
   },
   {
@@ -89,7 +89,7 @@ const plans = [
       "Priority support",
     ],
     cta: "Start Pro Trial",
-    link: "/register",
+    link: "/student-register",
     highlight: true,
   },
   {
@@ -98,7 +98,7 @@ const plans = [
     period: "per batch",
     features: [
       "Everything in Pro",
-      "B2B admin dashboard",
+      "B2B mentor dashboard",
       "Batch & cohort analytics",
       "Skill cluster heatmaps",
       "CSV export",
@@ -127,12 +127,28 @@ export default function LandingPage() {
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#how-it-works" className="hover:text-white transition-colors">How it Works</a>
           <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+          <Link href="/b2b-student-login" className="hover:text-white transition-colors flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-teal-400" />
+            B2B Student
+          </Link>
+          <Link href="/mentor-login" className="hover:text-white transition-colors flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-emerald-400" />
+            Mentor
+          </Link>
+          <Link href="/admin-login" className="hover:text-white transition-colors flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-amber-400" />
+            Admin
+          </Link>
+          <Link href="/platform-admin-login" className="hover:text-white transition-colors flex items-center gap-1.5">
+            <ShieldCheck size={14} className="text-purple-400" />
+            Platform
+          </Link>
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/login" className="text-sm text-white/60 hover:text-white transition-colors px-4 py-2">
+          <Link href="/student-login" className="text-sm text-white/60 hover:text-white transition-colors px-4 py-2">
             Sign In
           </Link>
-          <Link href="/register"
+          <Link href="/student-register"
             className="text-sm font-semibold text-black px-4 py-2 rounded-lg transition-all hover:scale-105"
             style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 16px rgba(251,146,60,0.3)" }}>
             Get Started
@@ -167,23 +183,35 @@ export default function LandingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/register"
+            <Link href="/student-register"
               className="group flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
               style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 30px rgba(251,146,60,0.3)" }}>
               Start Free Today
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/login"
+            <Link href="/student-login"
               className="flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white/80 hover:text-white transition-all glass-card glass-card-hover">
               <Play size={14} className="text-amber-400" />
               Student Login
             </Link>
             <div className="w-px h-10 bg-white/10 hidden sm:block mx-2" />
-            <Link href="/admin-login"
+            <Link href="/mentor-login"
               className="group flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
               style={{ background: "linear-gradient(135deg,#10b981,#059669)", boxShadow: "0 0 30px rgba(16,185,129,0.3)" }}>
               <ShieldCheck size={16} />
-              B2B Admin Portal
+              Mentor Portal
+            </Link>
+            <Link href="/admin-login"
+              className="group flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
+              style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 30px rgba(251,146,60,0.3)" }}>
+              <ShieldCheck size={16} />
+              Admin Portal
+            </Link>
+            <Link href="/platform-admin-login"
+              className="group flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
+              style={{ background: "linear-gradient(135deg,#8b5cf6,#7c3aed)", boxShadow: "0 0 30px rgba(139,92,246,0.3)" }}>
+              <ShieldCheck size={16} />
+              Platform Admin
             </Link>
           </div>
 
@@ -242,6 +270,172 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mentor Portal CTA */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="glass-card rounded-3xl p-10 md:p-12 relative overflow-hidden"
+            style={{ 
+              background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.05))",
+              border: "1px solid rgba(16,185,129,0.2)",
+              boxShadow: "0 0 40px rgba(16,185,129,0.1)"
+            }}>
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%)" }} />
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg,#10b981,#059669)", boxShadow: "0 0 20px rgba(16,185,129,0.4)" }}>
+                  <ShieldCheck size={24} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">For Institutions & Mentors</p>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">Mentor Portal</h2>
+                </div>
+              </div>
+
+              <p className="text-white/60 mb-8 max-w-2xl leading-relaxed">
+                Comprehensive dashboard for educational institutions and mentors to track student progress, 
+                manage batches, analyze performance metrics, and generate detailed reports. Monitor your 
+                students' interview preparation journey with real-time analytics and insights.
+              </p>
+
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                <div className="glass-card rounded-xl p-4">
+                  <Users size={20} className="text-emerald-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Batch Management</p>
+                  <p className="text-xs text-white/40">Track multiple student cohorts</p>
+                </div>
+                <div className="glass-card rounded-xl p-4">
+                  <BarChart3 size={20} className="text-emerald-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Analytics Dashboard</p>
+                  <p className="text-xs text-white/40">Real-time performance metrics</p>
+                </div>
+                <div className="glass-card rounded-xl p-4">
+                  <TrendingUp size={20} className="text-emerald-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Progress Reports</p>
+                  <p className="text-xs text-white/40">Exportable CSV & PDF reports</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/mentor-login"
+                  className="group flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white transition-all hover:scale-105"
+                  style={{ background: "linear-gradient(135deg,#10b981,#059669)", boxShadow: "0 0 30px rgba(16,185,129,0.3)" }}>
+                  Access Mentor Portal
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/mentor-register"
+                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white/80 hover:text-white transition-all glass-card glass-card-hover">
+                  Register as Mentor
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* B2B Student Portal CTA */}
+      <section className="py-10 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="glass-card rounded-3xl p-8 md:p-10 relative overflow-hidden"
+            style={{ 
+              background: "linear-gradient(135deg, rgba(20,184,166,0.08), rgba(13,148,136,0.05))",
+              border: "1px solid rgba(20,184,166,0.2)",
+              boxShadow: "0 0 40px rgba(20,184,166,0.08)"
+            }}>
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div>
+                <p className="text-xs font-semibold text-teal-400 uppercase tracking-widest mb-2">For Enrolled Students</p>
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-2">B2B Student Portal</h2>
+                <p className="text-white/50 text-sm max-w-lg">
+                  Enrolled via your institution or mentor? Access your assigned tasks, track your CI score, view mentor recommendations, and message your mentor directly.
+                </p>
+              </div>
+              <Link href="/b2b-student-login"
+                className="flex-shrink-0 group flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all hover:scale-105"
+                style={{ background: "linear-gradient(135deg,#14b8a6,#0d9488)", boxShadow: "0 0 20px rgba(20,184,166,0.3)" }}>
+                <Users size={16} />
+                Student Login
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Admin CTA */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="glass-card rounded-3xl p-10 md:p-12 relative overflow-hidden"
+            style={{ 
+              background: "linear-gradient(135deg, rgba(251,146,60,0.08), rgba(245,158,11,0.05))",
+              border: "1px solid rgba(251,146,60,0.2)",
+              boxShadow: "0 0 40px rgba(251,146,60,0.1)"
+            }}>
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, rgba(251,146,60,0.15) 0%, transparent 70%)" }} />
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 20px rgba(251,146,60,0.4)" }}>
+                  <ShieldCheck size={24} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-amber-400 uppercase tracking-widest">For Platform Administrators</p>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">Admin Portal</h2>
+                </div>
+              </div>
+
+              <p className="text-white/60 mb-8 max-w-2xl leading-relaxed">
+                Comprehensive system administration dashboard for managing the entire AI Interview Coach platform. 
+                Monitor system health, manage licenses, handle subscriptions, validate AI-generated questions, 
+                and oversee all platform operations with advanced analytics and reporting tools.
+              </p>
+
+              <div className="grid md:grid-cols-4 gap-4 mb-8">
+                <div className="glass-card rounded-xl p-4">
+                  <BarChart3 size={20} className="text-amber-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Platform Monitor</p>
+                  <p className="text-xs text-white/40">System health & metrics</p>
+                </div>
+                <div className="glass-card rounded-xl p-4">
+                  <Users size={20} className="text-amber-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">License Management</p>
+                  <p className="text-xs text-white/40">B2B account control</p>
+                </div>
+                <div className="glass-card rounded-xl p-4">
+                  <TrendingUp size={20} className="text-amber-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Subscriptions</p>
+                  <p className="text-xs text-white/40">B2C payment tracking</p>
+                </div>
+                <div className="glass-card rounded-xl p-4">
+                  <CheckCircle2 size={20} className="text-amber-400 mb-2" />
+                  <p className="text-sm font-semibold text-white mb-1">Question Validation</p>
+                  <p className="text-xs text-white/40">AI content review</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/admin-login"
+                  className="group flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white transition-all hover:scale-105"
+                  style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 30px rgba(251,146,60,0.3)" }}>
+                  Access Admin Portal
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link href="/admin-register"
+                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-white/80 hover:text-white transition-all glass-card glass-card-hover">
+                  Register as Admin
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -312,7 +506,7 @@ export default function LandingPage() {
             Ready to boost your <span className="text-gradient-amber">confidence</span>?
           </h2>
           <p className="text-white/40 mb-8">Join thousands of students and professionals preparing smarter with AI.</p>
-          <Link href="/register"
+          <Link href="/student-register"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-black transition-all hover:scale-105"
             style={{ background: "linear-gradient(135deg,#fb923c,#f59e0b)", boxShadow: "0 0 30px rgba(251,146,60,0.3)" }}>
             Get Started Free <ArrowRight size={16} />

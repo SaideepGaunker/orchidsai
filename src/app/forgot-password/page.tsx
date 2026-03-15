@@ -142,7 +142,7 @@ export default function ForgotPasswordPage() {
                     <p className="text-center text-xs text-white/30 mt-6">
                         Remember your password?{" "}
                         <Link
-                            href="/login"
+                            href="/student-login"
                             className="text-amber-400 hover:text-amber-300 transition-colors font-medium"
                         >
                             Sign in

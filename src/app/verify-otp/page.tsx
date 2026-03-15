@@ -124,7 +124,7 @@ export default function VerifyOtpPage() {
           </p>
 
           <p className="text-center text-xs text-white/25 mt-4">
-            <Link href="/login" className="text-white/40 hover:text-white/60 transition-colors">
+            <Link href="/student-login" className="text-white/40 hover:text-white/60 transition-colors">
               ← Back to sign in
             </Link>
           </p>

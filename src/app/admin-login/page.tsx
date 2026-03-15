@@ -1,187 +1,138 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { BrainCircuit, Eye, EyeOff, ArrowRight, Mail, Lock, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { BrainCircuit, AlertCircle } from "lucide-react";
 
 export default function AdminLoginPage() {
-    const router = useRouter();
-    const { login, isAuthenticated, isLoading } = useAuth();
-    const [showPass, setShowPass] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { login, isAuthenticated, logout } = useAuth();
+  const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const ok = await login(email, password);
-        if (ok) router.push("/admin");
-    };
+  // Clear any existing auth on mount
+  useEffect(() => {
+    logout();
+  }, [logout]);
 
+  // Redirect if already authenticated
+  useEffect(() => {
     if (isAuthenticated) {
-        router.replace("/admin");
-        return null;
+      router.replace("/admin");
+    }
+  }, [isAuthenticated, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
     }
 
-    return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-grid">
-            {/* Glow */}
-            <div
-                className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full pointer-events-none"
-                style={{
-                    background:
-                        "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)",
-                }}
-            />
+    setIsLoading(true);
 
-            <div className="w-full max-w-md relative">
-                {/* Card */}
-                <div
-                    className="glass-card rounded-3xl p-8"
-                    style={{ border: "1px solid rgba(255,255,255,0.08)" }}
-                >
-                    {/* Logo */}
-                    <div className="flex items-center justify-between mb-8">
-                        <div className="flex items-center gap-3">
-                            <div
-                                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                                style={{
-                                    background: "linear-gradient(135deg,#10b981,#059669)",
-                                    boxShadow: "0 0 20px rgba(16,185,129,0.35)",
-                                }}
-                            >
-                                <BrainCircuit size={18} className="text-black" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-bold text-white leading-none">
-                                    AI Interview Coach
-                                </p>
-                                <p className="text-xs text-white/40">B2B Portal</p>
-                            </div>
-                        </div>
-                        <ShieldCheck size={28} className="text-emerald-400 opacity-20" />
-                    </div>
+    try {
+      const success = await login(email, password);
+      if (success) {
+        // Use router.replace for cleaner navigation
+        router.replace("/admin");
+      } else {
+        setError("Invalid credentials");
+      }
+    } catch (err) {
+      setError("An error occurred during login");
+      console.error("Login error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-                    <h1 className="text-2xl font-bold text-white mb-1">
-                        Admin Sign In
-                    </h1>
-                    <p className="text-sm text-white/40 mb-8">
-                        Manage your institution's batches and analytics
-                    </p>
-
-                    <form className="space-y-4" onSubmit={handleSubmit}>
-                        {/* Email */}
-                        <div>
-                            <label className="text-xs font-medium text-white/50 mb-1.5 block">
-                                Work Email
-                            </label>
-                            <div className="relative">
-                                <Mail
-                                    size={15}
-                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30"
-                                />
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="admin@college.edu"
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder:text-white/20 outline-none transition-all"
-                                    style={{
-                                        background: "rgba(255,255,255,0.05)",
-                                        border: "1px solid rgba(255,255,255,0.08)",
-                                    }}
-                                    onFocus={(e) =>
-                                        (e.target.style.borderColor = "rgba(16,185,129,0.4)")
-                                    }
-                                    onBlur={(e) =>
-                                    (e.target.style.borderColor =
-                                        "rgba(255,255,255,0.08)")
-                                    }
-                                />
-                            </div>
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <div className="flex items-center justify-between mb-1.5">
-                                <label className="text-xs font-medium text-white/50">
-                                    Password
-                                </label>
-                                <Link
-                                    href="/forgot-password"
-                                    className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </div>
-                            <div className="relative">
-                                <Lock
-                                    size={15}
-                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30"
-                                />
-                                <input
-                                    type={showPass ? "text" : "password"}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    className="w-full pl-10 pr-11 py-3 rounded-xl text-sm text-white placeholder:text-white/20 outline-none transition-all"
-                                    style={{
-                                        background: "rgba(255,255,255,0.05)",
-                                        border: "1px solid rgba(255,255,255,0.08)",
-                                    }}
-                                    onFocus={(e) =>
-                                        (e.target.style.borderColor = "rgba(16,185,129,0.4)")
-                                    }
-                                    onBlur={(e) =>
-                                    (e.target.style.borderColor =
-                                        "rgba(255,255,255,0.08)")
-                                    }
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPass(!showPass)}
-                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
-                                >
-                                    {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
-                                </button>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-black text-sm transition-all hover:scale-[1.02] mt-2 disabled:opacity-70"
-                            style={{
-                                background: "linear-gradient(135deg,#10b981,#059669)",
-                                boxShadow: "0 0 20px rgba(16,185,129,0.25)",
-                            }}
-                        >
-                            {isLoading ? "Signing in..." : "Sign In to Portal"}{" "}
-                            <ArrowRight size={15} />
-                        </button>
-                    </form>
-
-                    <p className="text-center text-xs text-white/30 mt-6">
-                        Need an institutional account?{" "}
-                        <Link
-                            href="/admin-register"
-                            className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium"
-                        >
-                            Contact Sales
-                        </Link>
-                    </p>
-                    <p className="text-center text-xs text-white/30 mt-3 pt-3 border-t border-white/10">
-                        Are you a student?{" "}
-                        <Link
-                            href="/login"
-                            className="text-amber-400 hover:text-amber-300 transition-colors font-medium"
-                        >
-                            Normal Sign In
-                        </Link>
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#0a0a0f] via-[#0f1419] to-[#1a1f2e] p-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-gradient-to-b from-gray-900/90 to-gray-950/90 p-10 backdrop-blur-xl shadow-2xl">
+        {/* Logo */}
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-amber-500 to-orange-600 shadow-[0_0_40px_rgba(251,146,60,0.5)]">
+            <BrainCircuit size={40} className="text-white" strokeWidth={2.5} />
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight text-white mb-3">Admin Portal</h1>
+          <p className="text-base text-gray-400">
+            Platform administration access
+          </p>
         </div>
-    );
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-sm font-medium text-gray-300">
+              Email
+            </Label>
+            <input
+              id="email"
+              type="email"
+              placeholder="admin@orchids.ai"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full h-14 rounded-2xl border border-white/10 bg-white/5 px-5 text-base text-white placeholder:text-gray-500 backdrop-blur-xl transition-all duration-200 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 focus:bg-white/10 outline-none"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-sm font-medium text-gray-300">
+              Password
+            </Label>
+            <input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full h-14 rounded-2xl border-2 border-amber-500/30 bg-white/5 px-5 text-base text-white placeholder:text-gray-500 backdrop-blur-xl transition-all duration-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30 focus:bg-white/10 outline-none"
+            />
+          </div>
+
+          {error && (
+            <div className="flex items-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
+              <AlertCircle size={18} className="flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full h-14 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 px-6 text-lg font-bold text-white shadow-[0_0_30px_rgba(251,146,60,0.4)] transition-all duration-300 hover:from-amber-600 hover:to-orange-700 hover:shadow-[0_0_40px_rgba(251,146,60,0.6)] hover:scale-[1.02] active:scale-[0.98]"
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                Signing in...
+              </span>
+            ) : (
+              "Sign In"
+            )}
+          </Button>
+        </form>
+
+        {/* Mock credentials hint */}
+        <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+          <p className="mb-3 text-sm font-medium text-gray-400">Mock Admin Accounts:</p>
+          <div className="space-y-2 text-sm text-gray-500">
+            <p>• <span className="text-gray-400">admin@orchids.ai</span> (Platform Admin)</p>
+            <p>• <span className="text-gray-400">validator@orchids.ai</span> (Question Validator)</p>
+            <p>• <span className="text-gray-400">superadmin@orchids.ai</span> (Super Admin)</p>
+            <p className="text-xs text-gray-600 mt-3">Use any password to login</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
